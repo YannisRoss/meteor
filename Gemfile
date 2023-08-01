@@ -6,6 +6,7 @@ ruby "3.0.2"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.6"
 
+gem 'pry', '~> 0.13.1'
 # Use postgresql as the database for Active Record
 gem "pg", "~> 1.1"
 
@@ -46,3 +47,7 @@ group :development do
   # gem "spring"
 end
 
+
+gem "authentication-zero", "~> 2.16"
+# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
+gem "bcrypt", "~> 3.1.7"
