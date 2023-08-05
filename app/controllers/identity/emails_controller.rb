@@ -3,7 +3,7 @@ class Identity::EmailsController < ApplicationController
 
   def update
     if !@user.authenticate(params[:current_password])
-      render json: { error: "The password you entered is incorrect" }, status: :bad_request
+      render json: { error: 'The password you entered is incorrect' }, status: :bad_request
     elsif @user.update(email: params[:email])
       render_show
     else
@@ -12,19 +12,21 @@ class Identity::EmailsController < ApplicationController
   end
 
   private
-    def set_user
-      @user = Current.user
-    end
 
-    def render_show
-      if @user.email_previously_changed?
-        resend_email_verification; render(json: @user)
-      else
-        render json: @user
-      end
-    end
+  def set_user
+    @user = Current.user
+  end
 
-    def resend_email_verification
-      UserMailer.with(user: @user).email_verification.deliver_later
+  def render_show
+    if @user.email_previously_changed?
+      resend_email_verification
+      render(json: @user)
+    else
+      render json: @user
     end
+  end
+
+  def resend_email_verification
+    UserMailer.with(user: @user).email_verification.deliver_later
+  end
 end

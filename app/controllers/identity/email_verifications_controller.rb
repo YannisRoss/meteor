@@ -4,7 +4,8 @@ class Identity::EmailVerificationsController < ApplicationController
   before_action :set_user, only: :show
 
   def show
-    @user.update!(verified: true); head(:no_content)
+    @user.update!(verified: true)
+    head(:no_content)
   end
 
   def create
@@ -12,9 +13,11 @@ class Identity::EmailVerificationsController < ApplicationController
   end
 
   private
-    def set_user
-      token = EmailVerificationToken.find_signed!(params[:sid]); @user = token.user
-    rescue StandardError
-      render json: { error: "That email verification link is invalid" }, status: :bad_request
-    end
+
+  def set_user
+    token = EmailVerificationToken.find_signed!(params[:sid])
+    @user = token.user
+  rescue StandardError
+    render json: { error: 'That email verification link is invalid' }, status: :bad_request
+  end
 end

@@ -3,7 +3,7 @@ class PasswordsController < ApplicationController
 
   def update
     if !@user.authenticate(params[:current_password])
-      render json: { error: "The current password you entered is incorrect" }, status: :bad_request
+      render json: { error: 'The current password you entered is incorrect' }, status: :bad_request
     elsif @user.update(user_params)
       render json: @user
     else
@@ -12,11 +12,12 @@ class PasswordsController < ApplicationController
   end
 
   private
-    def set_user
-      @user = Current.user
-    end
 
-    def user_params
-      params.permit(:password, :password_confirmation)
-    end
+  def set_user
+    @user = Current.user
+  end
+
+  def user_params
+    params.permit(:password, :password_confirmation)
+  end
 end
