@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   post 'sign_in', to: 'sessions#create'
-  post 'sign_up', to: 'users#create'
+
+  resources :users, only: :create
+  patch 'users/update_info', to: 'users#update'
   post 'attach_resume', to: 'users#attach_resume'
+
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
   namespace :identity do
@@ -10,8 +13,4 @@ Rails.application.routes.draw do
     resource :password_reset,     only: %i[new edit create update]
   end
   get 'weather_data', to: 'weather_data#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
 end
