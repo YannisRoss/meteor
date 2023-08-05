@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
 
     if user && user.authenticate(params[:password])
       @session = user.sessions.create!
-      response.set_header 'X-Session-Token', @session.signed_id
+      response.set_header 'X-Session-Token', @session.signed_id(expires_in: 5.hours)
       render json: @session, status: :created
     else
       render json: { error: 'That email or password is incorrect' }, status: :unauthorized
