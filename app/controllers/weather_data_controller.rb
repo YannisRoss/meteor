@@ -19,8 +19,8 @@ class WeatherDataController < ApplicationController
   def create
     if has_resume?
       if permitted_params[:weather_data].present?
-
-        data = StoredWeatherDataObject.new(user: Current.user, contents: permitted_params[:weather_data].to_json)
+        data = StoredWeatherDataObject.new(user: Current.user, title: permitted_params[:title],
+                                           contents: permitted_params[:weather_data].to_json)
 
         if data.save
           render json: data, status: :ok
@@ -50,7 +50,7 @@ class WeatherDataController < ApplicationController
   private
 
   def permitted_params
-    params.permit(:latitude, :longitude, weather_data: %i[time temperature])
+    params.permit(:latitude, :longitude, :title, weather_data: %i[time temperature])
   end
 
   def has_resume?
