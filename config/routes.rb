@@ -12,5 +12,6 @@ Rails.application.routes.draw do
     resource :email_verification, only: %i[show create]
     resource :password_reset,     only: %i[new edit create update]
   end
-  get 'weather_data', to: 'weather_data#index'
+  resources :weather_data, only: %i[index create]
+
 end
