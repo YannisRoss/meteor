@@ -1,5 +1,5 @@
-class RegistrationsController < ApplicationController
-  skip_before_action :authenticate
+class UsersController < ApplicationController
+  skip_before_action :authenticate, only: [:create]
 
   def create
     @user = User.new(user_params)
@@ -12,9 +12,19 @@ class RegistrationsController < ApplicationController
     end
   end
 
+  def attach_resume
+    @user = Current.user
+
+    if @user.resume.attach(user_params[:resume])
+      render json: url_for(@user.resume), status: :ok 
+    else
+      render json: @user.errors
+    end
+  end
+
   private
     def user_params
-      params.permit(:email, :password, :password_confirmation)
+      params.permit(:email, :password, :password_confirmation, :resume)
     end
 
     def send_email_verification

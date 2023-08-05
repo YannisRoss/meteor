@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   post "sign_in", to: "sessions#create"
-  post "sign_up", to: "registrations#create"
+  post "sign_up", to: "users#create"
+  post "attach_resume", to: "users#attach_resume"
   resources :sessions, only: [:index, :show, :destroy]
   resource  :password, only: [:edit, :update]
   namespace :identity do
