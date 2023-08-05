@@ -12,6 +12,16 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    @user = Current.user
+
+    if @user.update(user_params)
+      render json: @user, status: :ok
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
   def attach_resume
     @user = Current.user
 
