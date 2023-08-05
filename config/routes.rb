@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     resource :email_verification, only: [:show, :create]
     resource :password_reset,     only: [:new, :edit, :create, :update]
   end
+  get "weather_data", to: "weather_data#index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
