@@ -37,6 +37,16 @@ class WeatherDataController < ApplicationController
     end
   end
 
+  def destroy
+    data = StoredWeatherDataObject.find(params[:id])
+    if data.user == Current.user
+      data.destroy
+      render json: Current.user.stored_weather_data_objects, status: :ok
+    else
+      render json: "You don't have permission to delete other users' data", status: :unauthorized
+    end
+  end
+
   private
 
   def permitted_params
