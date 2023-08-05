@@ -5,8 +5,7 @@ class WeatherDataController < ApplicationController
     if Current.user.resume.attached?
       # Show weather data
     else
-      render json: "Resume upload required", status: :unauthorized
+      render json: 'Resume upload required', status: :unauthorized
     end
   end
-
 end

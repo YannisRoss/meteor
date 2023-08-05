@@ -16,18 +16,19 @@ class UsersController < ApplicationController
     @user = Current.user
 
     if @user.resume.attach(user_params[:resume])
-      render json: url_for(@user.resume), status: :ok 
+      render json: url_for(@user.resume), status: :ok
     else
       render json: @user.errors
     end
   end
 
   private
-    def user_params
-      params.permit(:email, :password, :password_confirmation, :resume)
-    end
 
-    def send_email_verification
-      UserMailer.with(user: @user).email_verification.deliver_later
-    end
+  def user_params
+    params.permit(:email, :password, :password_confirmation, :resume)
+  end
+
+  def send_email_verification
+    UserMailer.with(user: @user).email_verification.deliver_later
+  end
 end
