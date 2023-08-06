@@ -5,7 +5,8 @@ Rails.application.routes.draw do
 
   resources :users, only: :create
   patch 'users/update_info', to: 'users#update'
-  post 'attach_resume', to: 'users#attach_resume'
+  post 'users/attach_resume', to: 'users#attach_resume'
+  get 'users/stored_data', to: 'users#stored_data'
 
   resources :sessions, only: %i[index show destroy]
   resource  :password, only: %i[edit update]
