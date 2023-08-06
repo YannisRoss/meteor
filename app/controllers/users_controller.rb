@@ -24,7 +24,6 @@ class UsersController < ApplicationController
 
   def attach_resume
     @user = Current.user
-
     if @user.resume.attach(user_params[:resume])
       render json: url_for(@user.resume), status: :ok
     else
