@@ -52,12 +52,22 @@ paths:
           description: Unauthorized or session expired
         422:
           description: Invalid Params
+  /users/stored_data:
+    get:
+      summary: Retrieves user-stored weather data
+      tags:
+        - users
+      responses:
+        200:
+          description: Data retrieved
+        401:
+          description: Unauthorized or session expired
 
-  /attach_resume:
+  /users/attach_resume:
     post:
       summary: Attaches a resume file to the jwt-related user
       tags:
-        - resume
+        - users
       parameters:
         - in: body
           name: resume

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :authenticate, only: [:create]
 
+  # POST /users
   def create
     @user = User.new(user_params)
 
@@ -8,10 +9,11 @@ class UsersController < ApplicationController
       send_email_verification
       render json: @user, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: {error: @user.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
+  # PATCH /users
   def update
     @user = Current.user
 
@@ -22,15 +24,21 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users/attach_resume
   def attach_resume
     @user = Current.user
     if @user.resume.attach(user_params[:resume])
-      render json: url_for(@user.resume), status: :ok
+      render json: {user: @user, resume: @user.resume.attached?}, status: :ok
     else
       render json: @user.errors
     end
   end
 
+  # GET /users/stored_data
+  def stored_data
+    @user = Current.user
+    render json: @user.stored_weather_data_objects, status: :ok
+  end
   private
 
   def user_params
