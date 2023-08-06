@@ -16,6 +16,7 @@ class WeatherDataController < ApplicationController
     end
   end
 
+  # POST /weather_data
   def create
     if has_resume?
       if permitted_params[:weather_data].present?
@@ -37,6 +38,7 @@ class WeatherDataController < ApplicationController
     end
   end
 
+  # DELETE /weather_data/:id
   def destroy
     data = StoredWeatherDataObject.find(params[:id])
     if data.user == Current.user
