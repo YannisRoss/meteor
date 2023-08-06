@@ -4,4 +4,4 @@ Meteor is a Ruby on Rails API that interfaces with [Open-Meteo's weather forecas
 
 Run the server with `rails s`
 
-A list of the API endpoints can be found under /api-docs/index.html, using [Swagger and OpenAPI 3.0](https://swagger.io/)https://swagger.io/
+A list of the API endpoints can be found under /api-docs/index.html, using [Swagger and OpenAPI 3.0](https://swagger.io/)
