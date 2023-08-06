@@ -1,0 +1,189 @@
+---
+openapi: 3.0.1
+info:
+  title: Meteor API
+  version: v1
+paths:
+  /users:
+    post:
+      summary: Creates a user
+      tags:
+        - users
+      parameters:
+        - in: body
+          name: user details
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: User created
+        422:
+          description: Invalid Params
+  /users/update_info:
+    patch:
+      summary: Updates user information
+      tags:
+        - users
+      parameters:
+        - in: body
+          name: user details
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: User updated
+        401:
+          description: Unauthorized or session expired
+        422:
+          description: Invalid Params
+
+  /attach_resume:
+    post:
+      summary: Attaches a resume file to the jwt-related user
+      tags:
+        - resume
+      parameters:
+        - in: body
+          name: resume
+          schema:
+            type: object
+      responses:
+        200:
+          description: Resume received and attached to user
+        401:
+          description: Unauthorized or session expired
+        422:
+          description: Invalid resume
+        500:
+          description: Internal server error (couldn't read provided file)
+
+  /sign_in:
+    post:
+      summary: Authenticates and retrieves JWT and user info
+      tags:
+        - authentication
+      parameters:
+        - in: body
+          name: user details
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        201:
+          description: Authorized
+        401:
+          description: Wrong credentials
+            
+
+  /weather_data:
+
+    get:
+      summary: Sends a request for weather data
+      tags:
+        - weather_data
+      parameters:
+        - in: path
+          name: coordinates
+          schema:
+            type: object
+            required:
+              - latitude
+              - longitude
+            properties:
+              latitude:
+                type: number
+              longitude:
+                type: number  
+      responses:
+        200:
+          description: Weather data received
+        401:
+          description: Unauthorized, session expired or resume missing
+        422:
+          description: Invalid Params
+
+    post:
+      summary: Saves weather data
+      tags:
+        - weather_data
+      parameters:
+        - in: body
+          name: weather data
+          schema:
+            type: array
+            properties:
+              title:
+                type: string
+              time:
+                type: string
+              temperature:
+                type: number
+          examples: 
+            title:
+              value: "Athens GR August 7th"    
+              summary: Sample title       
+            time:         
+              value: "2023-08-05T00:00"    
+              summary: Sample time value
+            temperature:
+              value: 25.8  
+              summary: Sample temperature value 
+      responses:
+        200:
+          description: Weather data saved
+        401:
+          description: Unauthorized, session expired or resume missing
+
+    delete:
+      summary: Deletes saved weather data
+      tags:
+        - weather_data
+      parameters:
+        - in: path
+          name: stored weather data object id
+          schema:
+            properties:
+              id:
+                type: integer
+          examples: 
+            title:
+              value: "3"    
+              summary: Sample id       
+      responses:
+        200:
+          description: Weather data deleted
+        401:
+          description: Unauthorized or session expired
+
+
+
+  
+      
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000/
