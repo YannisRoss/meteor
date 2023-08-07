@@ -9,7 +9,7 @@ class UsersController < ApplicationController
       send_email_verification
       render json: @user, status: :created
     else
-      render json: {error: @user.errors.full_messages}, status: :unprocessable_entity
+      render json: { error: @user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -28,7 +28,7 @@ class UsersController < ApplicationController
   def attach_resume
     @user = Current.user
     if @user.resume.attach(user_params[:resume])
-      render json: {user: @user, resume: @user.resume.attached?}, status: :ok
+      render json: { user: @user, resume: @user.resume.attached? }, status: :ok
     else
       render json: @user.errors
     end
@@ -39,6 +39,7 @@ class UsersController < ApplicationController
     @user = Current.user
     render json: @user.stored_weather_data_objects, status: :ok
   end
+
   private
 
   def user_params

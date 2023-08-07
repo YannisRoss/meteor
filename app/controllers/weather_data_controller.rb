@@ -3,7 +3,7 @@ class WeatherDataController < ApplicationController
 
   # GET /weather_data
   def index
-    if has_resume?
+    if resume_present?
       if permitted_params[:latitude].present? && permitted_params[:longitude].present?
         weather_data = WeatherDataFetcher.call(permitted_params)
         render json: weather_data, status: :ok
@@ -18,7 +18,7 @@ class WeatherDataController < ApplicationController
 
   # POST /weather_data
   def create
-    if has_resume?
+    if resume_present?
       if permitted_params[:weather_data].present?
         data = StoredWeatherDataObject.new(user: Current.user, title: permitted_params[:title],
                                            contents: permitted_params[:weather_data].to_json)
@@ -55,7 +55,7 @@ class WeatherDataController < ApplicationController
     params.permit(:latitude, :longitude, :title, weather_data: %i[time temperature])
   end
 
-  def has_resume?
+  def resume_present?
     Current.user.resume.attached?
   end
 end
